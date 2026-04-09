@@ -1,0 +1,1318 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Marea — Home Decor</title>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet" />
+  <style>
+    /* ─── TOKENS ─────────────────────────────────────────── */
+    :root {
+      --navy:      #263A52;
+      --blush:     #EEDAD1;
+      --slate:     #A8B9C0;
+      --terra:     #B05B34;
+      --cream:     #F5F0EB;
+      --white:     #FFFFFF;
+      --navy-light:#344D6A;
+
+      --font-display: 'Peanut Butter', cursive;
+      --font-body:    'Poppins', sans-serif;
+
+      --ease-wave: cubic-bezier(0.34, 1.56, 0.64, 1);
+    }
+
+    /* ─── PEANUT BUTTER (self-hosted fallback via @font-face) ── */
+    /* We load it from Google Fonts alternative — using a CDN embed */
+
+    /* ─── RESET ──────────────────────────────────────────── */
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+    body {
+      font-family: var(--font-body);
+      background: var(--cream);
+      color: var(--navy);
+      overflow-x: hidden;
+    }
+    img { display: block; max-width: 100%; }
+    a { color: inherit; text-decoration: none; }
+
+    /* ─── LANGUAGE TOGGLE ────────────────────────────────── */
+    #lang-toggle {
+      position: fixed;
+      top: 1.25rem;
+      right: 1.5rem;
+      z-index: 100;
+      display: flex;
+      background: var(--navy);
+      border-radius: 2rem;
+      padding: 3px;
+      gap: 2px;
+    }
+    #lang-toggle button {
+      font-family: var(--font-body);
+      font-size: 0.7rem;
+      font-weight: 600;
+      letter-spacing: 0.08em;
+      border: none;
+      cursor: pointer;
+      padding: 0.4rem 0.85rem;
+      border-radius: 2rem;
+      transition: background 0.25s, color 0.25s;
+      background: transparent;
+      color: var(--blush);
+      opacity: 0.55;
+    }
+    #lang-toggle button.active {
+      background: var(--blush);
+      color: var(--navy);
+      opacity: 1;
+    }
+
+    /* hide/show language layers */
+    [data-lang] { display: none; }
+    body.en [data-lang="en"] { display: block; }
+    body.es [data-lang="es"] { display: block; }
+    body.en [data-lang-inline="en"],
+    body.es [data-lang-inline="es"] { display: inline; }
+    [data-lang-inline] { display: none; }
+
+    /* ─── WAVE SVG DIVIDERS ──────────────────────────────── */
+    .wave-divider { display: block; width: 100%; line-height: 0; }
+    .wave-divider svg { width: 100%; height: auto; display: block; }
+
+    /* ─── HEADER / HERO ──────────────────────────────────── */
+    header {
+      background: var(--cream);
+      padding: 5rem 2rem 0;
+      text-align: center;
+      position: relative;
+    }
+    .logo-wrap {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 0.4rem;
+      animation: fadeUp 0.9s var(--ease-wave) both;
+    }
+    .logo-mark {
+      width: 90px;
+      height: 90px;
+    }
+    .logo-wordmark {
+      font-family: 'Dancing Script', cursive;
+      font-size: clamp(3.5rem, 8vw, 6rem);
+      font-weight: 700;
+      color: var(--navy);
+      line-height: 1;
+      letter-spacing: -0.01em;
+    }
+    .logo-sub {
+      font-family: var(--font-body);
+      font-size: 0.85rem;
+      font-weight: 400;
+      letter-spacing: 0.3em;
+      text-transform: uppercase;
+      color: var(--slate);
+      margin-top: -0.2rem;
+    }
+    .hero-tagline {
+      margin-top: 2.5rem;
+      font-size: clamp(1rem, 2.5vw, 1.2rem);
+      font-weight: 300;
+      color: var(--navy);
+      max-width: 520px;
+      margin-left: auto;
+      margin-right: auto;
+      line-height: 1.65;
+      animation: fadeUp 1s 0.2s var(--ease-wave) both;
+    }
+    .hero-cta-row {
+      margin-top: 2rem;
+      display: flex;
+      justify-content: center;
+      gap: 1rem;
+      flex-wrap: wrap;
+      animation: fadeUp 1s 0.4s var(--ease-wave) both;
+    }
+    .btn-primary {
+      background: var(--navy);
+      color: var(--blush);
+      font-family: var(--font-body);
+      font-size: 0.82rem;
+      font-weight: 600;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      padding: 0.85rem 2rem;
+      border-radius: 2rem;
+      border: none;
+      cursor: pointer;
+      transition: transform 0.2s var(--ease-wave), background 0.2s;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+    .btn-primary:hover { transform: translateY(-2px) scale(1.02); background: var(--navy-light); }
+    .btn-ghost {
+      background: transparent;
+      color: var(--navy);
+      border: 1.5px solid var(--navy);
+      font-family: var(--font-body);
+      font-size: 0.82rem;
+      font-weight: 600;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      padding: 0.85rem 2rem;
+      border-radius: 2rem;
+      cursor: pointer;
+      transition: transform 0.2s var(--ease-wave), background 0.2s, color 0.2s;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+    .btn-ghost:hover { background: var(--navy); color: var(--blush); transform: translateY(-2px); }
+
+    .hero-photos {
+      margin-top: 3.5rem;
+      display: grid;
+      grid-template-columns: 1fr 1.4fr 1fr;
+      gap: 1rem;
+      max-width: 900px;
+      margin-left: auto;
+      margin-right: auto;
+      padding: 0 1rem;
+      animation: fadeUp 1.1s 0.5s var(--ease-wave) both;
+    }
+    .hero-photo {
+      border-radius: 1.5rem;
+      overflow: hidden;
+      aspect-ratio: 3/4;
+      background: var(--slate);
+    }
+    .hero-photo:nth-child(2) { border-radius: 2rem; margin-top: -1.5rem; }
+    .hero-photo .photo-fill {
+      width: 100%; height: 100%;
+      object-fit: cover;
+    }
+    /* placeholder colors if no real photos */
+    .hero-photo.ph1 { background: linear-gradient(145deg, var(--blush), var(--slate)); }
+    .hero-photo.ph2 { background: linear-gradient(145deg, var(--navy), var(--navy-light)); }
+    .hero-photo.ph3 { background: linear-gradient(145deg, var(--terra), #C97050); }
+
+    .ph-inner {
+      width: 100%; height: 100%;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 2rem; opacity: 0.3;
+    }
+
+    /* ─── SECTION SHARED ─────────────────────────────────── */
+    section { padding: 5rem 2rem; }
+    .section-label {
+      font-size: 0.72rem;
+      font-weight: 600;
+      letter-spacing: 0.25em;
+      text-transform: uppercase;
+      color: var(--terra);
+      margin-bottom: 0.75rem;
+    }
+    h2.section-title {
+      font-family: 'Dancing Script', cursive;
+      font-size: clamp(2.2rem, 5vw, 3.5rem);
+      font-weight: 700;
+      color: var(--navy);
+      line-height: 1.15;
+      margin-bottom: 1.2rem;
+    }
+    .section-body {
+      font-size: 1rem;
+      font-weight: 300;
+      line-height: 1.8;
+      color: var(--navy);
+      opacity: 0.85;
+      max-width: 560px;
+    }
+
+    /* ─── STORY SECTION ──────────────────────────────────── */
+    #story {
+      background: var(--navy);
+      color: var(--blush);
+      position: relative;
+      overflow: hidden;
+    }
+    #story .section-label { color: var(--slate); }
+    #story h2.section-title { color: var(--blush); }
+    #story .section-body { color: var(--blush); opacity: 0.8; }
+    .story-inner {
+      max-width: 1100px;
+      margin: 0 auto;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 4rem;
+      align-items: center;
+    }
+    .story-pattern {
+      position: absolute;
+      right: -60px;
+      top: -40px;
+      width: 340px;
+      opacity: 0.07;
+      pointer-events: none;
+    }
+    .story-values {
+      margin-top: 2rem;
+      display: flex;
+      flex-direction: column;
+      gap: 1rem;
+    }
+    .story-value {
+      display: flex;
+      align-items: flex-start;
+      gap: 0.85rem;
+    }
+    .value-icon {
+      width: 36px;
+      height: 36px;
+      border-radius: 50%;
+      background: rgba(168,185,192,0.2);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1rem;
+      flex-shrink: 0;
+      margin-top: 2px;
+    }
+    .value-text { font-size: 0.9rem; line-height: 1.6; color: var(--blush); opacity: 0.8; }
+    .value-text strong { color: var(--blush); opacity: 1; font-weight: 500; display: block; }
+
+    .story-image-col {
+      position: relative;
+    }
+    .story-img-main {
+      border-radius: 2rem;
+      aspect-ratio: 4/5;
+      background: linear-gradient(145deg, var(--navy-light), #1a2d40);
+      overflow: hidden;
+      position: relative;
+    }
+    .story-img-accent {
+      position: absolute;
+      bottom: -1.5rem;
+      left: -1.5rem;
+      width: 55%;
+      border-radius: 1.5rem;
+      aspect-ratio: 1;
+      background: var(--terra);
+      opacity: 0.15;
+    }
+    .hands-label {
+      position: absolute;
+      bottom: 1.5rem;
+      right: 1.5rem;
+      background: var(--blush);
+      color: var(--navy);
+      font-size: 0.7rem;
+      font-weight: 600;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      padding: 0.5rem 1rem;
+      border-radius: 2rem;
+    }
+
+    /* ─── LINES SECTION (two product lines) ─────────────── */
+    #lines {
+      background: var(--cream);
+      padding: 5rem 2rem;
+    }
+    .lines-header {
+      text-align: center;
+      margin-bottom: 3.5rem;
+    }
+    .lines-grid {
+      max-width: 1000px;
+      margin: 0 auto;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 1.5rem;
+    }
+    .line-card {
+      border-radius: 2rem;
+      overflow: hidden;
+      position: relative;
+      aspect-ratio: 3/4;
+      cursor: default;
+      transition: transform 0.35s var(--ease-wave);
+    }
+    .line-card:hover { transform: translateY(-6px) scale(1.01); }
+    .line-card.alta { background: var(--navy); }
+    .line-card.baja { background: var(--blush); }
+    .line-card-bg {
+      position: absolute;
+      inset: 0;
+      opacity: 0.12;
+    }
+    .line-card-content {
+      position: absolute;
+      bottom: 0; left: 0; right: 0;
+      padding: 2.5rem 2rem;
+    }
+    .line-card.alta .line-card-content { color: var(--blush); }
+    .line-card.baja .line-card-content { color: var(--navy); }
+    .line-name {
+      font-family: 'Dancing Script', cursive;
+      font-size: clamp(2rem, 4vw, 3rem);
+      font-weight: 700;
+      line-height: 1;
+      margin-bottom: 0.5rem;
+    }
+    .line-desc {
+      font-size: 0.88rem;
+      font-weight: 300;
+      line-height: 1.65;
+      opacity: 0.85;
+    }
+    .line-tag {
+      display: inline-block;
+      margin-top: 1rem;
+      font-size: 0.68rem;
+      font-weight: 600;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      padding: 0.35rem 0.9rem;
+      border-radius: 2rem;
+      border: 1px solid currentColor;
+      opacity: 0.7;
+    }
+
+    /* Alta illustrations */
+    .alta-shapes {
+      position: absolute;
+      inset: 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.5rem;
+      padding: 2rem;
+      flex-wrap: wrap;
+      opacity: 0.18;
+    }
+    .shape {
+      border-radius: 50%;
+      background: var(--blush);
+    }
+
+    /* ─── COLLECTIONS / PRICING ──────────────────────────── */
+    #collections {
+      background: var(--blush);
+      position: relative;
+      overflow: hidden;
+    }
+    .collections-inner {
+      max-width: 1100px;
+      margin: 0 auto;
+    }
+    .collections-header {
+      text-align: center;
+      margin-bottom: 3rem;
+    }
+    .unique-note {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      background: var(--navy);
+      color: var(--blush);
+      font-size: 0.72rem;
+      font-weight: 600;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      padding: 0.5rem 1.25rem;
+      border-radius: 2rem;
+      margin-bottom: 1.5rem;
+    }
+    .pricing-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 1.25rem;
+      align-items: start;
+    }
+    .pricing-card {
+      background: var(--white);
+      border-radius: 2rem;
+      padding: 2rem 1.75rem;
+      position: relative;
+      transition: transform 0.3s var(--ease-wave), box-shadow 0.3s;
+      overflow: hidden;
+    }
+    .pricing-card:hover {
+      transform: translateY(-8px);
+      box-shadow: 0 24px 60px rgba(38,58,82,0.12);
+    }
+    .pricing-card.featured {
+      background: var(--navy);
+      color: var(--blush);
+    }
+    .pricing-card.featured .pricing-meta,
+    .pricing-card.featured .pricing-detail,
+    .pricing-card.featured .pricing-days { color: var(--slate); }
+    .pricing-card.featured .pricing-price { color: var(--blush); }
+    .featured-badge {
+      position: absolute;
+      top: 1.25rem;
+      right: 1.25rem;
+      background: var(--terra);
+      color: white;
+      font-size: 0.62rem;
+      font-weight: 700;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      padding: 0.3rem 0.75rem;
+      border-radius: 2rem;
+    }
+    .pricing-tier {
+      font-family: 'Dancing Script', cursive;
+      font-size: 1.9rem;
+      font-weight: 700;
+      margin-bottom: 0.25rem;
+    }
+    .pricing-meta {
+      font-size: 0.78rem;
+      color: var(--slate);
+      letter-spacing: 0.06em;
+      margin-bottom: 1.5rem;
+    }
+    .pricing-price {
+      font-size: 2.8rem;
+      font-weight: 600;
+      color: var(--navy);
+      line-height: 1;
+    }
+    .pricing-price sup { font-size: 1.2rem; font-weight: 400; vertical-align: super; }
+    .pricing-price sub { font-size: 0.9rem; font-weight: 300; color: var(--slate); }
+    .pricing-divider {
+      height: 1px;
+      background: currentColor;
+      opacity: 0.1;
+      margin: 1.25rem 0;
+    }
+    .pricing-detail {
+      font-size: 0.82rem;
+      color: var(--navy);
+      opacity: 0.7;
+      line-height: 1.7;
+      margin-bottom: 0.35rem;
+    }
+    .pricing-detail span { font-weight: 500; opacity: 1; }
+    .pricing-days {
+      font-size: 0.75rem;
+      color: var(--slate);
+      margin-top: 0.75rem;
+      display: flex;
+      align-items: center;
+      gap: 0.4rem;
+    }
+    .pricing-cta {
+      margin-top: 1.5rem;
+      width: 100%;
+      padding: 0.8rem;
+      border-radius: 1.5rem;
+      font-family: var(--font-body);
+      font-size: 0.78rem;
+      font-weight: 600;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      cursor: pointer;
+      border: none;
+      transition: transform 0.2s var(--ease-wave), opacity 0.2s;
+    }
+    .pricing-cta:hover { transform: translateY(-2px); opacity: 0.9; }
+    .pricing-card:not(.featured) .pricing-cta {
+      background: var(--navy);
+      color: var(--blush);
+    }
+    .pricing-card.featured .pricing-cta {
+      background: var(--blush);
+      color: var(--navy);
+    }
+
+    /* ─── HOW TO ORDER ───────────────────────────────────── */
+    #order {
+      background: var(--cream);
+    }
+    .order-inner {
+      max-width: 900px;
+      margin: 0 auto;
+    }
+    .order-header { text-align: center; margin-bottom: 3rem; }
+    .steps-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 2rem;
+      margin-bottom: 3rem;
+    }
+    .step {
+      text-align: center;
+    }
+    .step-num {
+      width: 52px;
+      height: 52px;
+      border-radius: 50%;
+      background: var(--navy);
+      color: var(--blush);
+      font-size: 1.1rem;
+      font-weight: 600;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin: 0 auto 1rem;
+    }
+    .step-title {
+      font-size: 0.95rem;
+      font-weight: 600;
+      margin-bottom: 0.4rem;
+      color: var(--navy);
+    }
+    .step-desc {
+      font-size: 0.82rem;
+      font-weight: 300;
+      color: var(--navy);
+      opacity: 0.7;
+      line-height: 1.65;
+    }
+    .step-connector {
+      display: none;
+    }
+    .transfer-box {
+      background: var(--navy);
+      border-radius: 1.75rem;
+      padding: 2rem 2.5rem;
+      color: var(--blush);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 2rem;
+      flex-wrap: wrap;
+    }
+    .transfer-label {
+      font-size: 0.7rem;
+      font-weight: 600;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--slate);
+      margin-bottom: 0.3rem;
+    }
+    .transfer-value {
+      font-size: 1rem;
+      font-weight: 500;
+      color: var(--blush);
+    }
+    .transfer-note {
+      font-size: 0.75rem;
+      color: var(--slate);
+      margin-top: 0.25rem;
+      font-style: italic;
+    }
+
+    /* ─── GALLERY ────────────────────────────────────────── */
+    #gallery {
+      background: var(--white);
+      padding: 5rem 2rem;
+    }
+    .gallery-header { text-align: center; margin-bottom: 3rem; }
+    .gallery-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      grid-template-rows: auto;
+      gap: 0.75rem;
+      max-width: 1000px;
+      margin: 0 auto;
+    }
+    .gallery-item {
+      border-radius: 1.25rem;
+      overflow: hidden;
+      aspect-ratio: 1;
+      transition: transform 0.3s var(--ease-wave);
+    }
+    .gallery-item:hover { transform: scale(1.03); z-index: 2; }
+    .gallery-item:nth-child(1) { grid-column: span 2; grid-row: span 2; aspect-ratio: auto; }
+    .gallery-item .gal-fill {
+      width: 100%; height: 100%; min-height: 160px;
+      object-fit: cover;
+    }
+    /* placeholder colors */
+    .gi1 { background: linear-gradient(145deg, var(--blush), #e0c8bc); }
+    .gi2 { background: linear-gradient(145deg, var(--slate), #8aa5b0); }
+    .gi3 { background: linear-gradient(145deg, var(--navy), var(--navy-light)); }
+    .gi4 { background: linear-gradient(145deg, var(--terra), #c97050); }
+    .gi5 { background: linear-gradient(145deg, #d4c5bb, var(--blush)); }
+    .gi6 { background: linear-gradient(145deg, var(--navy-light), var(--slate)); }
+    .gi7 { background: linear-gradient(145deg, #c0a89a, var(--terra)); }
+
+    .gallery-ph { width: 100%; height: 100%; min-height: 200px; display: flex; align-items: center; justify-content: center; }
+    .gallery-ph span { font-size: 1.8rem; opacity: 0.25; }
+
+    .ig-link {
+      text-align: center;
+      margin-top: 2rem;
+    }
+
+    /* ─── FOOTER ─────────────────────────────────────────── */
+    footer {
+      background: var(--navy);
+      color: var(--blush);
+      padding: 3.5rem 2rem 2rem;
+      position: relative;
+      overflow: hidden;
+    }
+    .footer-inner {
+      max-width: 1000px;
+      margin: 0 auto;
+      display: grid;
+      grid-template-columns: 1fr 1fr 1fr;
+      gap: 2rem;
+      align-items: start;
+      margin-bottom: 3rem;
+    }
+    .footer-brand .logo-wordmark { font-size: 2.2rem; color: var(--blush); }
+    .footer-brand .logo-sub { color: var(--slate); margin-top: 0.4rem; }
+    .footer-tagline { font-size: 0.85rem; font-weight: 300; color: var(--slate); margin-top: 0.75rem; line-height: 1.6; }
+    .footer-col-title {
+      font-size: 0.7rem;
+      font-weight: 600;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--slate);
+      margin-bottom: 1rem;
+    }
+    .footer-links { display: flex; flex-direction: column; gap: 0.5rem; }
+    .footer-links a {
+      font-size: 0.85rem;
+      color: var(--blush);
+      opacity: 0.7;
+      transition: opacity 0.2s;
+    }
+    .footer-links a:hover { opacity: 1; }
+    .footer-social { display: flex; gap: 0.75rem; margin-top: 0.5rem; }
+    .social-btn {
+      width: 40px; height: 40px;
+      border-radius: 50%;
+      background: rgba(238,218,209,0.1);
+      display: flex; align-items: center; justify-content: center;
+      font-size: 1rem;
+      transition: background 0.2s, transform 0.2s var(--ease-wave);
+      cursor: pointer;
+    }
+    .social-btn:hover { background: var(--blush); transform: translateY(-3px); }
+    .footer-bottom {
+      border-top: 1px solid rgba(238,218,209,0.1);
+      padding-top: 1.5rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 1rem;
+      max-width: 1000px;
+      margin: 0 auto;
+    }
+    .footer-copy { font-size: 0.75rem; color: var(--slate); opacity: 0.7; }
+
+    .footer-wave-pattern {
+      position: absolute;
+      right: -40px;
+      bottom: -20px;
+      width: 280px;
+      opacity: 0.04;
+      pointer-events: none;
+    }
+
+    /* ─── FLOATING WHATSAPP ──────────────────────────────── */
+    .whatsapp-float {
+      position: fixed;
+      bottom: 1.5rem;
+      right: 1.5rem;
+      z-index: 99;
+      background: #25D366;
+      color: white;
+      width: 56px;
+      height: 56px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.5rem;
+      box-shadow: 0 6px 24px rgba(37,211,102,0.4);
+      transition: transform 0.25s var(--ease-wave), box-shadow 0.25s;
+      cursor: pointer;
+    }
+    .whatsapp-float:hover { transform: scale(1.1) translateY(-3px); box-shadow: 0 10px 32px rgba(37,211,102,0.5); }
+
+    /* ─── ANIMATIONS ─────────────────────────────────────── */
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(28px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+    .reveal {
+      opacity: 0;
+      transform: translateY(24px);
+      transition: opacity 0.7s ease, transform 0.7s var(--ease-wave);
+    }
+    .reveal.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    /* ─── RESPONSIVE ─────────────────────────────────────── */
+    @media (max-width: 768px) {
+      .story-inner { grid-template-columns: 1fr; gap: 2rem; }
+      .story-image-col { display: none; }
+      .lines-grid { grid-template-columns: 1fr; max-width: 480px; }
+      .pricing-grid { grid-template-columns: 1fr; max-width: 380px; margin: 0 auto; }
+      .steps-grid { grid-template-columns: 1fr; max-width: 320px; margin: 0 auto 2rem; }
+      .gallery-grid { grid-template-columns: repeat(2, 1fr); }
+      .gallery-item:nth-child(1) { grid-column: span 2; }
+      .footer-inner { grid-template-columns: 1fr; }
+      .hero-photos { grid-template-columns: 1fr 1fr; }
+      .hero-photos .hero-photo:last-child { display: none; }
+      .transfer-box { flex-direction: column; gap: 1.25rem; }
+    }
+  </style>
+  <!-- Dancing Script as display font fallback for Peanut Butter feel -->
+  <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@700&family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet" />
+</head>
+<body class="en">
+
+  <!-- Language Toggle -->
+  <div id="lang-toggle">
+    <button class="active" onclick="setLang('en')">EN</button>
+    <button onclick="setLang('es')">ES</button>
+  </div>
+
+  <!-- Floating WhatsApp -->
+  <a class="whatsapp-float" href="https://wa.me/50300000000" target="_blank" title="WhatsApp">
+    <svg width="26" height="26" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+  </a>
+
+  <!-- ── HERO ── -->
+  <header>
+    <div class="logo-wrap">
+      <!-- Logo mark SVG: organic pebble with M wave -->
+      <svg class="logo-mark" viewBox="0 0 90 90" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <path d="M45 8C60 8 80 20 80 45C80 68 65 82 45 82C25 82 10 68 10 45C10 22 30 8 45 8Z" fill="#EEDAD1"/>
+        <path d="M28 54 C28 54 32 30 38 38 C42 44 45 36 45 36 C45 36 48 28 52 38 C56 48 60 36 62 54" stroke="#263A52" stroke-width="5.5" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
+      </svg>
+      <div class="logo-wordmark">marea</div>
+      <div class="logo-sub">home decor</div>
+    </div>
+
+    <p class="hero-tagline">
+      <span data-lang-inline="en">Handcrafted concrete pieces that bring a wave of creativity into your home.</span>
+      <span data-lang-inline="es">Piezas de concreto hechas a mano que traen una ola de creatividad a tu hogar.</span>
+    </p>
+
+    <div class="hero-cta-row">
+      <a href="#collections" class="btn-primary">
+        <span data-lang-inline="en">See Collections</span>
+        <span data-lang-inline="es">Ver Colecciones</span>
+        ↓
+      </a>
+      <a href="https://wa.me/50300000000" target="_blank" class="btn-ghost">
+        <span data-lang-inline="en">Order via WhatsApp</span>
+        <span data-lang-inline="es">Pedir por WhatsApp</span>
+      </a>
+    </div>
+
+    <!-- hero placeholder photos -->
+    <div class="hero-photos">
+      <div class="hero-photo ph1"><div class="ph-inner">🪴</div></div>
+      <div class="hero-photo ph2"><div class="ph-inner">🌊</div></div>
+      <div class="hero-photo ph3"><div class="ph-inner">✦</div></div>
+    </div>
+  </header>
+
+  <!-- wave down into story -->
+  <div class="wave-divider">
+    <svg viewBox="0 0 1440 60" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg">
+      <path d="M0,30 C240,60 480,0 720,30 C960,60 1200,0 1440,30 L1440,60 L0,60 Z" fill="#263A52"/>
+    </svg>
+  </div>
+
+  <!-- ── STORY ── -->
+  <section id="story">
+    <!-- pattern decoration -->
+    <svg class="story-pattern" viewBox="0 0 200 600" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <rect x="5" y="5" width="190" height="590" rx="20" stroke="#EEDAD1" stroke-width="1.5" stroke-dasharray="6 4"/>
+    </svg>
+
+    <div class="story-inner">
+      <div class="story-text-col reveal">
+        <div class="section-label">
+          <span data-lang-inline="en">Our Story</span>
+          <span data-lang-inline="es">Nuestra Historia</span>
+        </div>
+        <h2 class="section-title">
+          <span data-lang-inline="en">Ola Creativa</span>
+          <span data-lang-inline="es">Ola Creativa</span>
+        </h2>
+
+        <div data-lang="en">
+          <p class="section-body">At Marea you will find creativity flowing through every unique, handmade piece. Just as the tides bring change and renewal, each product is an artistic expression that transforms your space and creates a one-of-a-kind atmosphere.</p>
+        </div>
+        <div data-lang="es">
+          <p class="section-body">En Marea encontrarás la creatividad que fluye a través de cada pieza única, hecha a mano. Al igual que las mareas que traen consigo cambios y renovación, cada producto es una expresión artística que transforma tu espacio y crea una atmósfera única.</p>
+        </div>
+
+        <div class="story-values">
+          <div class="story-value">
+            <div class="value-icon">🤲</div>
+            <div class="value-text">
+              <strong data-lang-inline="en">Made by hand</strong>
+              <strong data-lang-inline="es">Hecho a mano</strong>
+              <span data-lang-inline="en">Every piece is individually crafted, mixed, and cured.</span>
+              <span data-lang-inline="es">Cada pieza es elaborada, mezclada y curada individualmente.</span>
+            </div>
+          </div>
+          <div class="story-value">
+            <div class="value-icon">✦</div>
+            <div class="value-text">
+              <strong data-lang-inline="en">Cada pieza es única</strong>
+              <strong data-lang-inline="es">Cada pieza es única</strong>
+              <span data-lang-inline="en">No two pieces are identical. That is the point.</span>
+              <span data-lang-inline="es">No hay dos piezas idénticas. Eso es precisamente lo que las hace especiales.</span>
+            </div>
+          </div>
+          <div class="story-value">
+            <div class="value-icon">🌊</div>
+            <div class="value-text">
+              <strong data-lang-inline="en">Limited collections</strong>
+              <strong data-lang-inline="es">Colecciones limitadas</strong>
+              <span data-lang-inline="en">Made in small batches so that quality never gets lost.</span>
+              <span data-lang-inline="es">Producidas en tandas pequeñas para que la calidad nunca se pierda.</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="story-image-col reveal">
+        <div class="story-img-main">
+          <div style="width:100%;height:100%;display:flex;align-items:center;justify-content:center;font-size:4rem;opacity:0.15;">🪨</div>
+          <div class="hands-label">
+            <span data-lang-inline="en">Handmade in El Salvador</span>
+            <span data-lang-inline="es">Hecho a mano en El Salvador</span>
+          </div>
+        </div>
+        <div class="story-img-accent"></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- wave up into lines -->
+  <div class="wave-divider" style="background:#263A52;">
+    <svg viewBox="0 0 1440 60" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg">
+      <path d="M0,30 C240,0 480,60 720,30 C960,0 1200,60 1440,30 L1440,0 L0,0 Z" fill="#F5F0EB"/>
+    </svg>
+  </div>
+
+  <!-- ── LINES ── -->
+  <section id="lines">
+    <div class="lines-header reveal">
+      <div class="section-label">
+        <span data-lang-inline="en">Product Lines</span>
+        <span data-lang-inline="es">Líneas de Producto</span>
+      </div>
+      <h2 class="section-title">
+        <span data-lang-inline="en">Find your wave</span>
+        <span data-lang-inline="es">Encuentra tu marea</span>
+      </h2>
+    </div>
+
+    <div class="lines-grid">
+      <!-- Marea Alta -->
+      <div class="line-card alta reveal">
+        <div style="position:absolute;inset:0;display:flex;align-items:center;justify-content:center;opacity:0.08;">
+          <svg width="220" height="220" viewBox="0 0 220 220"><circle cx="60" cy="80" r="40" fill="#EEDAD1"/><circle cx="150" cy="130" r="55" fill="#A8B9C0"/><circle cx="100" cy="170" r="30" fill="#EEDAD1"/></svg>
+        </div>
+        <div class="line-card-content">
+          <div class="line-name">Marea<br>Alta</div>
+          <p class="line-desc">
+            <span data-lang-inline="en">Bold, playful, full of personality. Designed to complement who you are.</span>
+            <span data-lang-inline="es">Atrevida, divertida, llena de personalidad. Diseñada para complementar tu forma de ser.</span>
+          </p>
+          <span class="line-tag">
+            <span data-lang-inline="en">Colorful &amp; expressive</span>
+            <span data-lang-inline="es">Colorida y expresiva</span>
+          </span>
+        </div>
+      </div>
+
+      <!-- Marea Baja -->
+      <div class="line-card baja reveal">
+        <div style="position:absolute;inset:0;display:flex;align-items:center;justify-content:center;opacity:0.12;">
+          <svg width="220" height="220" viewBox="0 0 220 220"><rect x="40" y="60" width="140" height="100" rx="20" stroke="#263A52" stroke-width="2" fill="none"/><rect x="65" y="85" width="90" height="50" rx="10" stroke="#263A52" stroke-width="1.5" fill="none"/></svg>
+        </div>
+        <div class="line-card-content">
+          <div class="line-name">Marea<br>Baja</div>
+          <p class="line-desc">
+            <span data-lang-inline="en">Sober, elegant, minimal. Handmade pieces that give your home that special, modern touch.</span>
+            <span data-lang-inline="es">Sobria, elegante, minimalista. Piezas hechas a mano que le darán ese toque especial y moderno a tu decoración.</span>
+          </p>
+          <span class="line-tag">
+            <span data-lang-inline="en">Minimal &amp; refined</span>
+            <span data-lang-inline="es">Minimalista y refinada</span>
+          </span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── COLLECTIONS / PRICING ── -->
+  <div class="wave-divider" style="background:var(--cream);">
+    <svg viewBox="0 0 1440 60" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg">
+      <path d="M0,20 C360,55 720,0 1080,40 C1260,58 1380,15 1440,20 L1440,60 L0,60 Z" fill="#EEDAD1"/>
+    </svg>
+  </div>
+
+  <section id="collections">
+    <div class="collections-inner">
+      <div class="collections-header reveal">
+        <div class="unique-note">
+          ⚠️&nbsp;
+          <span data-lang-inline="en">Each piece is unique — Cada pieza es única</span>
+          <span data-lang-inline="es">Cada pieza es única</span>
+        </div>
+        <div class="section-label">
+          <span data-lang-inline="en">Collections</span>
+          <span data-lang-inline="es">Colecciones</span>
+        </div>
+        <h2 class="section-title">
+          <span data-lang-inline="en">Choose your set</span>
+          <span data-lang-inline="es">Elige tu set</span>
+        </h2>
+      </div>
+
+      <div class="pricing-grid">
+        <!-- Minimal -->
+        <div class="pricing-card reveal">
+          <div class="pricing-tier">Minimal</div>
+          <div class="pricing-meta">
+            <span data-lang-inline="en">3-piece set</span>
+            <span data-lang-inline="es">Set de 3 piezas</span>
+          </div>
+          <div class="pricing-price"><sup>$</sup>59</div>
+          <div class="pricing-divider"></div>
+          <div class="pricing-detail">
+            <span data-lang-inline="en"><span>3</span> handcrafted pieces</span>
+            <span data-lang-inline="es"><span>3</span> piezas artesanales</span>
+          </div>
+          <div class="pricing-detail">
+            <span data-lang-inline="en"><span>Curated</span> selection</span>
+            <span data-lang-inline="es">Selección <span>curada</span></span>
+          </div>
+          <div class="pricing-days">
+            🕐&nbsp;
+            <span data-lang-inline="en">Ready in 5 days</span>
+            <span data-lang-inline="es">Lista en 5 días</span>
+          </div>
+          <a href="https://wa.me/50300000000?text=Hi%20Marea!%20I%27m%20interested%20in%20the%20Minimal%20set." target="_blank">
+            <button class="pricing-cta">
+              <span data-lang-inline="en">Order Now</span>
+              <span data-lang-inline="es">Ordenar Ahora</span>
+            </button>
+          </a>
+        </div>
+
+        <!-- Deluxe (featured) -->
+        <div class="pricing-card featured reveal">
+          <div class="featured-badge">
+            <span data-lang-inline="en">Popular</span>
+            <span data-lang-inline="es">Popular</span>
+          </div>
+          <div class="pricing-tier">Deluxe</div>
+          <div class="pricing-meta">
+            <span data-lang-inline="en">5-piece set</span>
+            <span data-lang-inline="es">Set de 5 piezas</span>
+          </div>
+          <div class="pricing-price"><sup>$</sup>89</div>
+          <div class="pricing-divider"></div>
+          <div class="pricing-detail">
+            <span data-lang-inline="en"><span>5</span> handcrafted pieces</span>
+            <span data-lang-inline="es"><span>5</span> piezas artesanales</span>
+          </div>
+          <div class="pricing-detail">
+            <span data-lang-inline="en"><span>Curated</span> selection</span>
+            <span data-lang-inline="es">Selección <span>curada</span></span>
+          </div>
+          <div class="pricing-days">
+            🕐&nbsp;
+            <span data-lang-inline="en">Ready in 5 days</span>
+            <span data-lang-inline="es">Lista en 5 días</span>
+          </div>
+          <a href="https://wa.me/50300000000?text=Hi%20Marea!%20I%27m%20interested%20in%20the%20Deluxe%20set." target="_blank">
+            <button class="pricing-cta">
+              <span data-lang-inline="en">Order Now</span>
+              <span data-lang-inline="es">Ordenar Ahora</span>
+            </button>
+          </a>
+        </div>
+
+        <!-- Sophisticated -->
+        <div class="pricing-card reveal">
+          <div class="pricing-tier">Sophisticated</div>
+          <div class="pricing-meta">
+            <span data-lang-inline="en">7-piece custom set</span>
+            <span data-lang-inline="es">Set personalizado de 7 piezas</span>
+          </div>
+          <div class="pricing-price"><sup>$</sup>199<sub>–249</sub></div>
+          <div class="pricing-divider"></div>
+          <div class="pricing-detail">
+            <span data-lang-inline="en"><span>7</span> handcrafted pieces</span>
+            <span data-lang-inline="es"><span>7</span> piezas artesanales</span>
+          </div>
+          <div class="pricing-detail">
+            <span data-lang-inline="en"><span>Fully custom</span> design</span>
+            <span data-lang-inline="es">Diseño <span>completamente personalizado</span></span>
+          </div>
+          <div class="pricing-days">
+            🕐&nbsp;
+            <span data-lang-inline="en">Ready in 10 days</span>
+            <span data-lang-inline="es">Lista en 10 días</span>
+          </div>
+          <a href="https://wa.me/50300000000?text=Hi%20Marea!%20I%27m%20interested%20in%20a%20custom%20Sophisticated%20set." target="_blank">
+            <button class="pricing-cta">
+              <span data-lang-inline="en">Order Now</span>
+              <span data-lang-inline="es">Ordenar Ahora</span>
+            </button>
+          </a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── HOW TO ORDER ── -->
+  <div class="wave-divider" style="background:var(--blush);">
+    <svg viewBox="0 0 1440 60" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg">
+      <path d="M0,30 C240,60 480,0 720,30 C960,60 1200,0 1440,30 L1440,0 L0,0 Z" fill="#F5F0EB"/>
+    </svg>
+  </div>
+
+  <section id="order">
+    <div class="order-inner">
+      <div class="order-header reveal">
+        <div class="section-label">
+          <span data-lang-inline="en">Simple Process</span>
+          <span data-lang-inline="es">Proceso Simple</span>
+        </div>
+        <h2 class="section-title">
+          <span data-lang-inline="en">How to order</span>
+          <span data-lang-inline="es">Cómo ordenar</span>
+        </h2>
+      </div>
+
+      <div class="steps-grid">
+        <div class="step reveal">
+          <div class="step-num">1</div>
+          <div class="step-title">
+            <span data-lang-inline="en">Choose your set</span>
+            <span data-lang-inline="es">Elige tu set</span>
+          </div>
+          <p class="step-desc">
+            <span data-lang-inline="en">Pick Minimal, Deluxe, or Sophisticated. Browse both lines and find your vibe.</span>
+            <span data-lang-inline="es">Elige Minimal, Deluxe o Sophisticated. Explora ambas líneas y encuentra la tuya.</span>
+          </p>
+        </div>
+        <div class="step reveal">
+          <div class="step-num">2</div>
+          <div class="step-title">
+            <span data-lang-inline="en">Send a WhatsApp</span>
+            <span data-lang-inline="es">Envía un WhatsApp</span>
+          </div>
+          <p class="step-desc">
+            <span data-lang-inline="en">Tell us what you want and we will confirm availability and details right away.</span>
+            <span data-lang-inline="es">Cuéntanos qué deseas y confirmamos disponibilidad y detalles de inmediato.</span>
+          </p>
+        </div>
+        <div class="step reveal">
+          <div class="step-num">3</div>
+          <div class="step-title">
+            <span data-lang-inline="en">Transfer &amp; done</span>
+            <span data-lang-inline="es">Transfiere y listo</span>
+          </div>
+          <p class="step-desc">
+            <span data-lang-inline="en">Confirm with a bank transfer to Banco Cuscatlán. We start crafting right after.</span>
+            <span data-lang-inline="es">Confirma con una transferencia a Banco Cuscatlán. Comenzamos a crear de inmediato.</span>
+          </p>
+        </div>
+      </div>
+
+      <div class="transfer-box reveal">
+        <div>
+          <div class="transfer-label">
+            <span data-lang-inline="en">Bank</span>
+            <span data-lang-inline="es">Banco</span>
+          </div>
+          <div class="transfer-value">Banco Cuscatlán</div>
+        </div>
+        <div>
+          <div class="transfer-label">
+            <span data-lang-inline="en">Account name</span>
+            <span data-lang-inline="es">Nombre de cuenta</span>
+          </div>
+          <div class="transfer-value">Marea Home Decor</div>
+        </div>
+        <div>
+          <div class="transfer-label">
+            <span data-lang-inline="en">Account number</span>
+            <span data-lang-inline="es">Número de cuenta</span>
+          </div>
+          <div class="transfer-value">● ● ● ● ● ● ●</div>
+          <div class="transfer-note">
+            <span data-lang-inline="en">Shared via WhatsApp on confirmation</span>
+            <span data-lang-inline="es">Se comparte por WhatsApp al confirmar</span>
+          </div>
+        </div>
+        <a href="https://wa.me/50300000000" target="_blank" class="btn-primary">
+          <span data-lang-inline="en">Start order</span>
+          <span data-lang-inline="es">Iniciar pedido</span>
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── GALLERY ── -->
+  <section id="gallery">
+    <div class="gallery-header reveal">
+      <div class="section-label">
+        <span data-lang-inline="en">Our work</span>
+        <span data-lang-inline="es">Nuestro trabajo</span>
+      </div>
+      <h2 class="section-title">
+        <span data-lang-inline="en">Every piece, a story</span>
+        <span data-lang-inline="es">Cada pieza, una historia</span>
+      </h2>
+    </div>
+
+    <div class="gallery-grid">
+      <div class="gallery-item gi1 reveal"><div class="gallery-ph"><span>🪴</span></div></div>
+      <div class="gallery-item gi2 reveal"><div class="gallery-ph"><span>🌊</span></div></div>
+      <div class="gallery-item gi3 reveal"><div class="gallery-ph"><span>🪨</span></div></div>
+      <div class="gallery-item gi4 reveal"><div class="gallery-ph"><span>✦</span></div></div>
+      <div class="gallery-item gi5 reveal"><div class="gallery-ph"><span>🌱</span></div></div>
+      <div class="gallery-item gi6 reveal"><div class="gallery-ph"><span>🐾</span></div></div>
+      <div class="gallery-item gi7 reveal"><div class="gallery-ph"><span>🌸</span></div></div>
+    </div>
+
+    <div class="ig-link reveal">
+      <a href="https://www.instagram.com/marea.decor/" target="_blank" class="btn-ghost" style="display:inline-flex;">
+        <span data-lang-inline="en">See more on Instagram</span>
+        <span data-lang-inline="es">Ver más en Instagram</span>
+        →
+      </a>
+    </div>
+  </section>
+
+  <!-- ── FOOTER ── -->
+  <div class="wave-divider" style="background:var(--white);">
+    <svg viewBox="0 0 1440 60" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg">
+      <path d="M0,20 C480,60 960,0 1440,30 L1440,60 L0,60 Z" fill="#263A52"/>
+    </svg>
+  </div>
+
+  <footer>
+    <div class="footer-inner">
+      <div class="footer-brand">
+        <div class="logo-wordmark" style="font-size:2.2rem;color:var(--blush);font-family:'Dancing Script',cursive;">marea</div>
+        <div class="logo-sub">home decor</div>
+        <p class="footer-tagline">
+          <span data-lang-inline="en">Handcrafted concrete pieces from El Salvador. Limited collections. Every wave is different.</span>
+          <span data-lang-inline="es">Piezas de concreto artesanales desde El Salvador. Colecciones limitadas. Cada marea es diferente.</span>
+        </p>
+      </div>
+
+      <div>
+        <div class="footer-col-title">
+          <span data-lang-inline="en">Navigate</span>
+          <span data-lang-inline="es">Navegar</span>
+        </div>
+        <div class="footer-links">
+          <a href="#story">
+            <span data-lang-inline="en">Our Story</span>
+            <span data-lang-inline="es">Nuestra Historia</span>
+          </a>
+          <a href="#lines">
+            <span data-lang-inline="en">Product Lines</span>
+            <span data-lang-inline="es">Líneas</span>
+          </a>
+          <a href="#collections">
+            <span data-lang-inline="en">Collections</span>
+            <span data-lang-inline="es">Colecciones</span>
+          </a>
+          <a href="#order">
+            <span data-lang-inline="en">How to Order</span>
+            <span data-lang-inline="es">Cómo Ordenar</span>
+          </a>
+        </div>
+      </div>
+
+      <div>
+        <div class="footer-col-title">
+          <span data-lang-inline="en">Connect</span>
+          <span data-lang-inline="es">Conectar</span>
+        </div>
+        <div class="footer-social">
+          <a class="social-btn" href="https://www.instagram.com/marea.decor/" target="_blank" title="Instagram">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zM12 0C8.741 0 8.333.014 7.053.072 2.695.272.273 2.69.073 7.052.014 8.333 0 8.741 0 12c0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98C8.333 23.986 8.741 24 12 24c3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98C15.668.014 15.259 0 12 0zm0 5.838a6.162 6.162 0 100 12.324 6.162 6.162 0 000-12.324zM12 16a4 4 0 110-8 4 4 0 010 8zm6.406-11.845a1.44 1.44 0 100 2.881 1.44 1.44 0 000-2.881z"/></svg>
+          </a>
+          <a class="social-btn" href="https://wa.me/50300000000" target="_blank" title="WhatsApp">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+          </a>
+        </div>
+        <p style="font-size:0.8rem;color:var(--slate);margin-top:1rem;line-height:1.6;">
+          <span data-lang-inline="en">Questions? We answer fast on WhatsApp.</span>
+          <span data-lang-inline="es">¿Preguntas? Respondemos rápido por WhatsApp.</span>
+        </p>
+      </div>
+    </div>
+
+    <div class="footer-bottom">
+      <div class="footer-copy">© 2025 Marea Home Decor. El Salvador.</div>
+      <div class="footer-copy">
+        <span data-lang-inline="en">Handcrafted with love 🌊</span>
+        <span data-lang-inline="es">Hecho con amor 🌊</span>
+      </div>
+    </div>
+
+    <!-- decorative wave lines pattern -->
+    <svg class="footer-wave-pattern" viewBox="0 0 200 400" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <path d="M10,20 C40,10 60,30 90,20 C120,10 150,35 190,15" stroke="#EEDAD1" stroke-width="1.5" fill="none"/>
+      <path d="M10,50 C40,40 60,65 90,50 C120,35 150,60 190,45" stroke="#EEDAD1" stroke-width="1.5" fill="none"/>
+      <path d="M10,80 C40,70 60,90 90,80 C120,70 150,90 190,75" stroke="#EEDAD1" stroke-width="1.5" fill="none"/>
+      <path d="M10,110 C40,100 60,120 90,110 C120,100 150,120 190,105" stroke="#EEDAD1" stroke-width="1.5" fill="none"/>
+      <path d="M10,140 C40,130 60,150 90,140 C120,130 150,150 190,135" stroke="#EEDAD1" stroke-width="1.5" fill="none"/>
+    </svg>
+  </footer>
+
+  <script>
+    // Language toggle
+    function setLang(lang) {
+      document.body.className = lang;
+      document.querySelectorAll('#lang-toggle button').forEach(btn => {
+        btn.classList.toggle('active', btn.textContent.trim().toLowerCase() === lang);
+      });
+      localStorage.setItem('marea-lang', lang);
+    }
+
+    // Restore language preference
+    const saved = localStorage.getItem('marea-lang');
+    if (saved) setLang(saved);
+
+    // Scroll reveal
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach((entry, i) => {
+        if (entry.isIntersecting) {
+          setTimeout(() => entry.target.classList.add('visible'), i * 60);
+          observer.unobserve(entry.target);
+        }
+      });
+    }, { threshold: 0.1 });
+
+    document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+  </script>
+</body>
+</html>

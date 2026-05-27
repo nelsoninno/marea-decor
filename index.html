@@ -958,6 +958,27 @@
     }
     .footer-copy { font-size: 0.75rem; color: var(--slate); opacity: 0.7; }
 
+    .made-by-eky {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.55rem;
+      font-size: 0.75rem;
+      color: var(--slate);
+      opacity: 0.85;
+      transition: opacity 0.25s, transform 0.25s;
+    }
+    .made-by-eky:hover { opacity: 1; transform: translateY(-1px); }
+    .made-by-eky .eky-text { white-space: nowrap; }
+    .made-by-eky .eky-logo {
+      height: 22px;
+      width: auto;
+      display: block;
+    }
+    @media (max-width: 540px) {
+      .made-by-eky { font-size: 0.7rem; gap: 0.45rem; }
+      .made-by-eky .eky-logo { height: 18px; }
+    }
+
     .footer-wave-pattern {
       position: absolute;
       right: -40px;
@@ -1524,6 +1545,13 @@
         <span data-lang-inline="en">Handcrafted with love 🌊</span>
         <span data-lang-inline="es">Hecho con amor 🌊</span>
       </div>
+      <a class="made-by-eky" href="https://everybodyknowsyou.com" target="_blank" rel="noopener" aria-label="Made with love by everybodyknowsyou — websites in 3 days">
+        <span class="eky-text">
+          <span data-lang-inline="en">Made with love by</span>
+          <span data-lang-inline="es">Hecho con amor por</span>
+        </span>
+        <img class="eky-logo" src="images/credit/eky-logo-complete-forblackbackground.webp" alt="everybodyknowsyou" width="120" height="22" loading="lazy" />
+      </a>
     </div>
 
     <!-- decorative wave lines pattern -->
